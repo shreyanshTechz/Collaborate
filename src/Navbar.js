@@ -18,7 +18,7 @@ const Navbar = ({ userLang, setUserLang, userTheme,
 		<div className="navbar">
 			<h1>Collaborate</h1>
 			<Select options={languages} value={userLang}
-				onChange={(e) => setUserLang(e.target.value)}
+				onChange={(e) => {setUserLang(e.values); console.log(e.values);}}
 				placeholder={userLang} />
 			<Select options={themes} value={userTheme}
 				onChange={(e) => setUserTheme(e.value)}
