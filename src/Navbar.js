@@ -18,10 +18,10 @@ const Navbar = ({ userLang, setUserLang, userTheme,
 		<div className="navbar">
 			<h1>Collaborate</h1>
 			<Select options={languages} value={userLang}
-				onChange={(e) => {setUserLang(e.values); console.log(e.values);}}
+				onChange={(e) => setUserLang(e[0].value)}
 				placeholder={userLang} />
 			<Select options={themes} value={userTheme}
-				onChange={(e) => setUserTheme(e.value)}
+				onChange={(e) => setUserTheme(e[0].value)}
 				placeholder={userTheme} />
 			<label>Font Size</label>
 			<input type="range" min="18" max="30"
