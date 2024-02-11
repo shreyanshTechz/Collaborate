@@ -12,7 +12,7 @@ const Navbar = ({ userLang, setUserLang, userTheme,
 	];
 	const themes = [
 		{ value: "vs-dark", label: "Dark" },
-		{ value: "light", label: "Light" },
+		{ value: "Light", label: "Light" },
 	]
 	return (
 		<div className="navbar">
