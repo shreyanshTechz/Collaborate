@@ -1,20 +1,26 @@
 import { useRef, useState } from 'react';
 import Editor from "@monaco-editor/react";
-import io from 'socket.io-client'
-import { useEffect } from 'react';
 import Navbar from './Navbar';
-const socket = io.connect('https://codeserver-ckyr.onrender.com/');
+import Chat from './chat';
+
 function App() {
-  const [userCode, setUserCode] = useState(``);
+  const [userCode, setUserCode] = useState(`dc`);
+  const [room,setroom] = useState("");
+  const [users,setusers] = useState("");
   const editor = useRef();
-  useEffect(() => {
-    editor.current.addEventListener("keyup", (evt) => {
-      socket.send(userCode);
-    })
-    socket.on('message', (data) => {
-      setUserCode(data);
-    })
-  },[userCode])
+ 
+  // useEffect(() => {
+  //   editor.current.addEventListener("keyup", (evt) => {
+  //     socket.send(userCode);
+  //   })
+  //   socket.on('messagecode', (data) => {
+  //     setUserCode(data);
+  //   })
+  // },[userCode])
+ 
+
+ 
+  
   
   const [userLang, setUserLang] = useState("cpp");
 
@@ -26,6 +32,7 @@ function App() {
 
   // State variable to set users input
   const [userInput, setUserInput] = useState("");
+  
 
   // State variable to set users output
   const [userOutput, setUserOutput] = useState("");
@@ -39,23 +46,23 @@ function App() {
   }
 
   // Function to call the compile endpoint
-  // function compile() {
-  // 	setLoading(true);
-  // 	if (userCode === ``) {
-  // 		return
-  // 	}
+  function compile() {
+  	setLoading(true);
+  	if (userCode === ``) {
+  		return
+  	}
 
   // 	// Post request to compile endpoint
-  // 	Axios.post(`http://localhost:8000/compile`, {
-  // 		code: userCode,
-  // 		language: userLang,
-  // 		input: userInput
-  // 	}).then((res) => {
-  // 		setUserOutput(res.data.output);
-  // 	}).then(() => {
-  // 		setLoading(false);
-  // 	})
-  // }
+  	// Axios.post(`http://localhost:8000/compile`, {
+  	// 	code: userCode,
+  	// 	language: userLang,
+  	// 	input: userInput
+  	// }).then((res) => {
+  	// 	setUserOutput(res.data.output);
+  	// }).then(() => {
+  	// 	setLoading(false);
+  	// })
+  }
 
   // Function to clear the output screen
 
@@ -66,10 +73,13 @@ function App() {
                 userLang={userLang} setUserLang={setUserLang}
                 userTheme={userTheme} setUserTheme={setUserTheme}
                 fontSize={fontSize} setFontSize={setFontSize}
+                room = {room} setroom={setroom}
+                setusers={setusers}
+      
             />
       <div className="main">
         {/* <textarea id='editor' ref={editor} value={userCode} onChange={(e) =>setUserCode(e.target.value)}></textarea> */}
-        <div className="left-container" ref={editor}>
+         <div className="left-container" id='editor' ref={editor}>
           <Editor
             options={options}
             height="calc(100vh - 50px)"
@@ -80,10 +90,10 @@ function App() {
             defaultValue="# Enter your code here"
             value={userCode}
             onChange={(value) => { setUserCode(value) }}
-          />
-          {/* <button className="run-btn" onClick={() => compile()}>
+          /> 
+          <button className="run-btn" onClick={() => compile()}>
 						Run
-					</button> */}
+					</button>
         </div>
         <div className="right-container">
           <h4>Input:</h4>
@@ -93,21 +103,22 @@ function App() {
             </textarea>
           </div>
           <h4>Output:</h4>
-          {/* {loading ? (
+           {loading ? (
 						<div className="spinner-box">
-							<img src={spinner} alt="Loading..." />
+							<img src={""} alt="Loading..." />
 						</div>
 					) : (
 						<div className="output-box">
 							<pre>{userOutput}</pre>
-							<button onClick={() => { clearOutput() }}
+							<button onClick={() => {  }}
 								className="clear-btn">
 								Clear
 							</button>
 						</div>
-					)} */}
+					)}
         </div>
       </div>
+      <Chat username={users} room={room} userCode={userCode} setUserCode={setUserCode}/>
     </div>
   );
 }

@@ -1,9 +1,11 @@
 import React from 'react';
 import Select from 'react-dropdown-select';
 import './Navbar.css';
-
+import { useState } from 'react';
 const Navbar = ({ userLang, setUserLang, userTheme,
-	setUserTheme, fontSize, setFontSize }) => {
+	setUserTheme, fontSize, setFontSize,setroom,setusers,setjoin }) => {
+	const [currRoom, setcurrRoom] = useState("")
+	const [currUser, setUser] = useState("")
 	const languages = [
 		{ value: "c", label: "C" },
 		{ value: "cpp", label: "C++" },
@@ -14,6 +16,11 @@ const Navbar = ({ userLang, setUserLang, userTheme,
 		{ value: "vs-dark", label: "Dark" },
 		{ value: "Light", label: "Light" },
 	]
+	const handlesubmit = ()=>{
+		
+		setroom(currRoom);
+		setusers(currUser);
+	}
 	return (
 		<div className="navbar">
 			<h1>Collaborate</h1>
@@ -27,6 +34,10 @@ const Navbar = ({ userLang, setUserLang, userTheme,
 			<input type="range" min="18" max="30"
 				value={fontSize} step="2"
 				onChange={(e) => { setFontSize(e.target.value) }} />
+			<input type="text" name="room" id="user" onChange={(e)=>setcurrRoom(e.target.value)}/>
+			<button onClick={handlesubmit}>Join</button>
+			<input type="text" name="user" id="room" onChange={(e)=>setUser(e.target.value)}/>
+			{/* <button onClick={()=>setusers(currUser)}>ChangeUser</button> */}
 		</div>
 	)
 }
