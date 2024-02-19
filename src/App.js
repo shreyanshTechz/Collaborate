@@ -35,7 +35,7 @@ function App() {
     console.log(data);
     let config = {
       method: 'post',
-      url: 'https://collaborate-e9m6.onrender.com/compilecode',
+      url: 'https://codeserver-ckyr.onrender.com/compilecode',
       headers: {
         'Content-Type': 'application/json',
         'mode': 'no-cors',
