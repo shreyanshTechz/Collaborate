@@ -4,34 +4,28 @@ import Navbar from './Navbar';
 import Chat from './chat';
 import React from 'react';
 import Axios from 'axios';
-import QueryString from 'qs';
 function App() {
   const [userCode, setUserCode] = useState(`//Enter Your Code here`);
   const [room, setroom] = useState("");
   const [users, setusers] = useState("");
   const editor = useRef();
 
-  const [userLang, setUserLang] = useState("C++");
+  const [userLang, setUserLang] = useState("cpp");
   const [userTheme, setUserTheme] = useState("vs-dark");
   const [fontSize, setFontSize] = useState(20);
   const [userInput, setUserInput] = useState("");
   const [userOutput, setUserOutput] = useState("");
-  const [loading, setLoading] = useState(false);
-
   const options = {
     fontSize: fontSize
   }
   function compile() {
+    setUserOutput("Loading....")
     let data = JSON.stringify({
       code: userCode,
       lang: userLang,
       input: userInput,
       inputRadio:userInput!==''
     });
-  //   var code = req.body.code;	
-	// var input = req.body.input;
-  //   var inputRadio = req.body.inputRadio;
-  //   var lang = req.body.lang;
     console.log(data);
     let config = {
       method: 'post',
@@ -43,31 +37,21 @@ function App() {
       },
       data: data
     };
-    //calling the code compilation API
     Axios(config)
       .then((response) => {
         setUserOutput(response.data.output);
+        if(response.data.output === undefined){
+          setUserOutput(response.data.error)
+        }
         console.log(response);
       }).catch((error) => {
         console.log(error);
       });
-    setLoading(true);
-
-    // if (userCode === `//Enter Your Code here`) {
-    //   return
-    // }
-    // Axios.post(`http://localhost:4000/compile`, {
-    //   code: userCode,
-    //   language: userLang,
-    //   input: userInput
-    // }).then((res) => {
-    //   setUserOutput(res.data.output);
-    // }).then(() => {
-    //   setLoading(false);
-    // })
   }
+
   return (
     <div className="App">
+      {process.env.SERVER}
       <Navbar
         userLang={userLang} setUserLang={setUserLang}
         userTheme={userTheme} setUserTheme={setUserTheme}
@@ -77,7 +61,6 @@ function App() {
 
       />
       <div className="main flex flex-row">
-        {/* <textarea id='editor' ref={editor} value={userCode} onChange={(e) =>setUserCode(e.target.value)}></textarea> */}
         <div className="left-container w-[70%]" id='editor' ref={editor}>
           <Editor
             options={options}
