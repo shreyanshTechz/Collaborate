@@ -1,6 +1,6 @@
 import Axios from 'axios';
-const ENDPOINT = 'http://localhost:4000/';
-// const ENDPOINT = 'https://codeserver-ckyr.onrender.com/';
+// const ENDPOINT = 'http://localhost:4000/';
+const ENDPOINT = 'https://codeserver-ckyr.onrender.com/';
 export default function compile(...args){
     console.log(args[3]);
     let data = JSON.stringify({
