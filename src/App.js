@@ -4,6 +4,8 @@ import Navbar from './Navbar';
 import Chat from './chat';
 import React from 'react';
 import compile from './utils/compile';
+import { ColorModeProvider } from './Theme';
+
 function App({user,room,userLang,users,setusers}) {
   const [userCode, setUserCode] = useState(`//Enter Your Code here`);
   const editor = useRef();
@@ -11,6 +13,18 @@ function App({user,room,userLang,users,setusers}) {
   const [fontSize, setFontSize] = useState(20);
   const [userInput, setUserInput] = useState("");
   const [userOutput, setUserOutput] = useState("");
+  const [themeMode, setThemeMode] = useState("dark")
+
+  const lightTheme =()=> {
+    setThemeMode("light")
+  }
+  const darkTheme =()=> {
+    setThemeMode("dark")
+  }
+
+  React.useEffect(() => {
+    document.querySelector('html').setAttribute("class" ,themeMode)
+  }, [themeMode]);
 
   const options = {
     fontSize: fontSize
@@ -20,6 +34,7 @@ function App({user,room,userLang,users,setusers}) {
     console.log(args);
   }
   return (
+    <ColorModeProvider value={{themeMode,lightTheme,darkTheme}}>
     <div className="App">
       <Navbar
         userTheme={userTheme} setUserTheme={setUserTheme}
@@ -33,7 +48,7 @@ function App({user,room,userLang,users,setusers}) {
             options={options}
             height="calc(100vh - 50px)"
             width="100%"
-            theme={userTheme}
+            theme={themeMode==='dark'?'vs-dark':'light'}
             language={userLang}
             defaultLanguage={userLang}
             defaultValue="# Enter your code here"
@@ -41,21 +56,21 @@ function App({user,room,userLang,users,setusers}) {
             onChange={(value) => { setUserCode(value) }}
           />
         </div>
-        <div className="flex bg-black h-[93vh] text-white flex-col w-[40%]">
+        <div className="flex dark:bg-black  h-[93vh] dark:text-white flex-col w-[40%]">
           <div className="flex flex-col h-[50vh]">
             <div className='flex w-full'>
               <div className='w-[50%] m-3'>
                 <h4 className='font-bold'>Input:</h4>
 
                 <div className="input-box" >
-                  <textarea style={{ overflow: 'auto' }} className='bg-black text-nowrap h-[30vh] w-[100%] text-white border rounded-lg  border-white p-3' id="code-inp border-t" onChange=
+                  <textarea style={{ overflow: 'auto' }} className='dark:bg-black dark:text-white text-nowrap h-[30vh] w-[100%] border rounded-lg  border-black p-3' id="code-inp border-t" onChange=
                     {(e) => setUserInput(e.target.value)}>
                   </textarea>
                 </div>
               </div>
               <div className='w-[50%]  m-3'>
                 <h4 className='font-bold'>Output:</h4>
-                <pre style={{ overflow: 'auto' }} className='bg-black text-white border border-white p-3 rounded-lg  h-[30vh] w-[100%]'>{userOutput}</pre>
+                <pre style={{ overflow: 'auto' }} className='dark:bg-black dark:text-white border border-black p-3 rounded-lg  h-[30vh] w-[100%]'>{userOutput}</pre>
 
               </div>
             </div>
@@ -80,6 +95,7 @@ function App({user,room,userLang,users,setusers}) {
       </div>
 
     </div>
+    </ColorModeProvider>
   );
 }
 

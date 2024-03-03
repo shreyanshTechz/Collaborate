@@ -1,9 +1,19 @@
 import React from 'react';
-import './Navbar.css';
+import useTheme from './Theme';
 const Navbar = ({ userLang, setUserTheme, fontSize, setFontSize,users,room }) => {
+  const {themeMode,darkTheme,lightTheme} = useTheme()
   console.log(userLang);
+  const clicker = () =>{
+    const darkModeStatus = themeMode==='dark'?true:false;
+    if(!darkModeStatus){
+      darkTheme()
+    }
+    else{
+      lightTheme()
+    }
+  }
   return (
-    <div className="navbar text-blue-200 bg-black font-extrabold ">
+    <div className="flex items-center p-5 h-[50px] text-center gap-5 text-blue-200 bg-black font-extrabold ">
       <h1>Collaborate</h1>
       {fontSize?<>
       
@@ -16,10 +26,12 @@ const Navbar = ({ userLang, setUserTheme, fontSize, setFontSize,users,room }) =>
       <div className="room text-red-200">{room}</div>
       Language :
       <div className="room text-red-200">{userLang}</div>
+      <button onClick={clicker} className='bg-white px-2 py-1 rounded-lg absolute right-36 dark:text-dark'>{themeMode}</button>
       <div className="flex absolute right-7 items-center space-x-2">
       {users.map((user,id) => (
               <div key={id} className="flex items-center space-x-2 group">
                 <div className="relative group">
+
                   <img
                     src={'https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Photos.png'}
                     alt={`Profile of ${user.name}`}

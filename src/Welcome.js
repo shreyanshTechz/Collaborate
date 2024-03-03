@@ -1,6 +1,5 @@
 import React from 'react';
 import Select from 'react-dropdown-select';
-import './Navbar.css';
 import { useState } from 'react';
 import App from './App';
 import Navbar from './Navbar';
@@ -104,40 +103,6 @@ const Home = () => {
                 </div>
             </div>}
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // <div className="navbar">
-        // 	<h1>Collaborate</h1>
-        // 	<Select options={languages} value={userLang}
-        // 		onChange={(e) => setUserLang(e[0].value)}
-        // 		placeholder={userLang} />
-        // 	<Select options={themes} value={userTheme}
-        // 		onChange={(e) => setUserTheme(e[0].value)}
-        // 		placeholder={userTheme} />
-        // 	<label>Font Size</label>
-        // 	<input type="range" min="18" max="30"
-        // 		value={fontSize} step="2"
-        // 		onChange={(e) => { setFontSize(e.target.value) }} />
-        // 	<input type="text" name="room" id="user" onChange={(e)=>setcurrRoom(e.target.value)}/>
-        // 	<button onClick={handlesubmit}>Join</button>
-        // 	<input type="text" name="user" id="room" onChange={(e)=>setUser(e.target.value)}/>
-        // 	{/* <button onClick={()=>setusers(currUser)}>ChangeUser</button> */}
-        // </div>
     )
 }
 
