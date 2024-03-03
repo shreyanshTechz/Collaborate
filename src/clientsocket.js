@@ -27,8 +27,12 @@ const ClientSocket = ({ username, room,setUserCode,userCode,users,setusers }) =>
     });
     socketRef.current.on('messagecode', (data) => {
         // setUserCode(data);
-        console.log(data);
-        alert(`New Data have been added by ${data.username}`);
+        console.log(username,data.username);
+        if(username !== data.username)
+        if (confirm(`New Changes were made by ${data.username}. Do you want to change the code to latest changes?`)) {
+          setUserCode(data.userCode);
+        }
+
 
       })
   }, [username,setUserCode]);
