@@ -26,11 +26,11 @@ const ClientSocket = ({ username, room,setUserCode,userCode,users,setusers }) =>
       setusers(users);
     });
     socketRef.current.on('messagecode', (data) => {
-        setUserCode(data);
+        // setUserCode(data);
+        console.log(data);
+        alert(`New Data have been added by ${data.username}`);
+
       })
-    // return () => {
-    //   socketRef.current.emit('disconnected');
-    // };
   }, [username,setUserCode]);
 
     const saveCode = Usercode =>{
